@@ -276,7 +276,7 @@ This repository documents one of my hands-on infrastructure projects using physi
 My technical projects reflect this combination of hands-on enterprise hardware experience, IT administration, programming, and infrastructure automation.
 
 **Portfolio:** [brandons-resume.com](https://brandons-resume.com)  
-**GitHub:** [Programmer-stevenson](https://github.com/Programmer-stevenson)  
+**GitHub:** [Programmer-stevenson](https://github.com/brandon-in-tech)  
 **LinkedIn:** [Brandon Stevenson](https://www.linkedin.com/in/brandon-in-tech/)
 
 [↑ Back to Table of Contents](#table-of-contents)
