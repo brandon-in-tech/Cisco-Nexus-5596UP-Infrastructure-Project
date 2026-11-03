@@ -43,6 +43,45 @@ The goal is to show the practical process of working with real enterprise networ
 [↑ Back to Table of Contents](#table-of-contents)
 ---
 
+## Recovery Workflow 
+
+
+flowchart TD
+    A["Physical Cisco Nexus N5K-C5596UP"] --> B["Serial Console Access via Tera Term"]
+    B --> C["Access Cisco Bootloader - loader>"]
+    C --> D["Inspect and Configure Temporary IP Settings"]
+    D --> E["Boot NX-OS Kickstart Image via TFTP"]
+    E --> F["Clear Startup Configuration and Reload"]
+    F --> G["Configure Management Interface - mgmt0"]
+    G --> H["Transfer NX-OS System Image via TFTP"]
+    H --> I["Copy NX-OS Image to Internal Bootflash"]
+    I --> J["Inspect Bootflash and Verify Image Files"]
+    J --> K["Configure Kickstart and System Boot Variables"]
+    K --> L["Review Boot Paths and Image Compatibility Warnings"]
+    L --> M["Load NX-OS System Image"]
+    M --> N["Verify NX-OS Version, Modules and Boot Settings"]
+    N --> O["Inspect Power Supplies and Module Diagnostics"]
+    O --> P["Review CPU, Memory and Ethernet Interfaces"]
+    P --> Q["Inspect Running and Startup Configurations"]
+    Q --> R["Review MAC Address Table and Spanning Tree"]
+    R --> S["Execute System Initialization - init system"]
+    S --> T["Clear Boot Variables and Saved Configuration Data"]
+    T --> U["Inspect Final Bootloader and Storage State"]
+    U --> V["Document Results, Diagnostics and Exceptions"]
+
+    classDef hardware fill:#073B70,color:#fff,stroke:#007CC3,stroke-width:2px
+    classDef recovery fill:#E8F4FD,color:#082D50,stroke:#007CC3,stroke-width:1px
+    classDef verification fill:#E8F5F1,color:#115846,stroke:#259B78,stroke-width:1px
+    classDef sanitization fill:#FFF3E2,color:#754600,stroke:#D89632,stroke-width:1px
+    classDef complete fill:#073B70,color:#fff,stroke:#259B78,stroke-width:2px
+
+    class A hardware
+    class B,C,D,E,F,G,H,I,J,K,L,M recovery
+    class N,O,P,Q,R verification
+    class S,T,U sanitization
+    class V complete
+
+
 <a id="hardware-and-tools"></a>
 ## 2. Hardware and Tools
 
