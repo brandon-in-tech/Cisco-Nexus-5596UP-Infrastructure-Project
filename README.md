@@ -36,8 +36,11 @@ I also performed hardware and system diagnostics, reviewed interface status and 
 
 The goal is to show the practical process of working with real enterprise networking hardware—not a simulation.
 
-[↑ Back to Table of Contents](#table-of-contents)
+<p align="center">
+  <img src="assets/flowchart.png" alt="Cisco Nexus 5596UP Project Overview Flowchart" width="100%">
+</p>
 
+[↑ Back to Table of Contents](#table-of-contents)
 ---
 
 <a id="hardware-and-tools"></a>
