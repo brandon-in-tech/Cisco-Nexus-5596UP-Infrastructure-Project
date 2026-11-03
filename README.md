@@ -1,8 +1,9 @@
 
 <div align="center">
-  <img src="assets/brandons-logo.png" alt="Brandon Stevenson — IT Professional" width="180">
+  
 
 # Cisco Nexus 5596UP — TFTP Server-Based NX-OS Image Deployment, Secure Data Sanitization & Infrastructure Validation
+<img src="assets/brandons-logo.png" alt="Brandon Stevenson — IT Professional" width="180">
 
 **Physical Cisco Nexus N5K-C5596UP | Cisco NX-OS | TFTP Recovery | Bootflash | Hardware Diagnostics**
 
