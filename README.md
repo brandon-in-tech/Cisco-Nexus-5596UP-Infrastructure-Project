@@ -49,6 +49,72 @@ The final maintenance stage involved system initialization and configuration-cle
 
 
 
+## Recovery Workflow
+
+```mermaid
+flowchart TD
+    A["Physical Cisco Nexus N5K-C5596UP"]
+    B["Serial Console Access via Tera Term"]
+    C["Access Cisco Bootloader"]
+    D["Configure Temporary IP Settings"]
+    E["Boot NX-OS Kickstart via TFTP"]
+    F["Clear Startup Configuration and Reload"]
+    G["Configure Management Interface mgmt0"]
+    H["Transfer NX-OS System Image via TFTP"]
+    I["Copy Image to Internal Bootflash"]
+    J["Verify NX-OS Image Files"]
+    K["Configure Kickstart and System Boot Variables"]
+    L["Inspect Boot Paths and Compatibility Warnings"]
+    M["Load NX-OS System Image"]
+    N["Verify NX-OS Version and Hardware Modules"]
+    O["Inspect Power Supplies and Diagnostics"]
+    P["Review CPU, Memory and Interfaces"]
+    Q["Inspect Running and Startup Configurations"]
+    R["Review MAC Address Table and Spanning Tree"]
+    S["Execute System Initialization"]
+    T["Clear Boot Variables and Saved Configurations"]
+    U["Inspect Final Storage and Bootloader State"]
+    V["Document Results and Technical Findings"]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+    J --> K
+    K --> L
+    L --> M
+    M --> N
+    N --> O
+    O --> P
+    P --> Q
+    Q --> R
+    R --> S
+    S --> T
+    T --> U
+    U --> V
+
+    classDef hardware fill:#073B70,color:#ffffff,stroke:#007CC3,stroke-width:2px
+    classDef recovery fill:#E8F4FD,color:#082D50,stroke:#007CC3,stroke-width:1px
+    classDef verification fill:#E8F5F1,color:#115846,stroke:#259B78,stroke-width:1px
+    classDef sanitization fill:#FFF3E2,color:#754600,stroke:#D89632,stroke-width:1px
+    classDef complete fill:#073B70,color:#ffffff,stroke:#259B78,stroke-width:2px
+
+    class A hardware
+    class B,C,D,E,F,G,H,I,J,K,L,M recovery
+    class N,O,P,Q,R verification
+    class S,T,U sanitization
+    class V complete
+```
+
+[↑ Back to Table of Contents](#table-of-contents)
+
+---
+
 
 
 
