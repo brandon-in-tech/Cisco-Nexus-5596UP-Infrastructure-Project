@@ -379,6 +379,8 @@ This maintenance record documents NX-OS recovery, image management, boot configu
 | System Initialization | Executed initialization and examined the resulting storage state. |
 | Configuration Clearing | Executed boot-variable, diagnostic, and startup-configuration erase commands. |
 
+
+<a id="technical-report"></a>
 ### Technical Findings
 
 **NX-OS Image Compatibility**
