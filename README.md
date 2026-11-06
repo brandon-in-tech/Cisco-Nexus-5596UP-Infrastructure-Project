@@ -399,25 +399,35 @@ The initialization procedure completed, and the subsequent bootflash inspection 
 
 The recorded console output supports the recovery operations, image transfers, configuration commands, diagnostic inspections, and initialization activities described in this report.
 
-The switch succesffully boots with the new OS ans is ready for configurations.
+The switch succesffully boots with the new OS and is ready for configurations.
 
 [↑ Back to Table of Contents](#table-of-contents)
 
 
 
-<a id="about"></a>
-## 11. About
+## 10. About
 
-I'm Brandon Stevenson, an IT Infrastructure Technician working with enterprise server and network equipment.
+**Brandon Stevenson**  
+IT Infrastructure Technician | Enterprise Servers & Networking
 
-My experience includes physical infrastructure servicing, Cisco networking equipment, server management interfaces, operating-system imaging, hardware troubleshooting, and technical documentation.
 
-This repository documents one of my hands-on infrastructure projects using physical enterprise networking hardware.
+IT professional with a diverse technical skill set spanning enterprise infrastructure, networking, systems administration, cloud technologies, cybersecurity, automation, and software development. Skilled in Cisco networking, Dell PowerEdge and HPE ProLiant servers, Microsoft Azure, Active Directory, Entra ID, Intune, Microsoft 365, PowerShell, and full-stack development technologies including JavaScript, TypeScript, React, Node.js, and SQL/NoSQL databases. Strong technical documentation, troubleshooting, and problem-solving capabilities across enterprise IT environments.
 
-My technical projects reflect this combination of hands-on enterprise hardware experience, IT administration, programming, and infrastructure automation.
 
-**Portfolio:** [brandons-resume.com](https://brandons-resume.com)  
-**GitHub:** [Programmer-stevenson](https://github.com/brandon-in-tech)  
-**LinkedIn:** [Brandon Stevenson](https://www.linkedin.com/in/brandon-in-tech/)
+### Education & Credentials
+
+- A.A.S. — Computer Information Technology (Software Programming)
+- B.S. Cloud & Network Engineering — Western Governors University (In Progress)
+
+### Professional Links
+
+- [Portfolio & Resume](https://www.brandons-resume.com/)
+- [GitHub — brandon-in-tech](https://github.com/brandon-in-tech)
+- [LinkedIn](https://www.linkedin.com/in/brandon-in-tech/)
+
+---
+
+*Technical documentation of physical infrastructure maintenance, NX-OS recovery, hardware diagnostics, and system initialization.*
 
 [↑ Back to Table of Contents](#table-of-contents)
+
