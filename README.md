@@ -168,7 +168,9 @@ The switch was accessed through its serial console. From the `loader>` environme
 
 - `show ip` displays the bootloader's network settings.
 - `set ip` supplies the switch with an address and subnet mask for the recovery connection.
-- `boot tftp://...` retrieves and starts a compatible kickstart image from the network server.
+
+- `boot tftp://...` retrieves the specified NX-OS kickstart image from the TFTP server and initiates the boot sequence.
+
 
 **Terminal evidence**
 
@@ -209,7 +211,19 @@ The `boot system bootflash:...` command selects the NX-OS system image for start
 
 ![Review kickstart and system boot variables](evidence/nexus500-step4.png)
 
-The output includes an **image compatibility warning**. Kickstart and system image releases must be compatible; the warning is recorded rather than treated as a successful compatibility check.
+
+### Boot Configuration Findings
+
+Following the TFTP image transfer, the NX-OS system image was stored in internal bootflash and referenced using the `boot system` configuration command.
+
+During boot-variable configuration, the switch reported an image compatibility-check failure (`0x80450002`). The console also recommended using `install all` for software upgrades and downgrades.
+
+The running configuration was saved using `copy run start`; however, a successful configuration save does not confirm compatibility between the configured kickstart and system images.
+
+The captured directory listings and boot-variable output also show differences between locally listed image releases and the configured startup paths.
+
+These findings are retained as part of the maintenance record. The published evidence establishes the configuration attempts and observed system responses, but does not independently verify a subsequent successful reboot using the selected image combination.
+
 
 **Review local images and load the system image**
 
@@ -226,7 +240,13 @@ The output includes an **image compatibility warning**. Kickstart and system ima
 <a id="nx-os-and-hardware-verification"></a>
 ## 6. NX-OS and Hardware Verification
 
-Once NX-OS was running, I checked the operating-system release, switch model, installed modules, and boot paths.
+
+The switch reached the NX-OS command-line interface, allowing inspection of the running operating-system version, chassis identification, installed hardware modules, and configured boot variables.
+
+`show version` identified the running NX-OS release, while `show module` provided hardware-module identification and operational status. The `show boot` output was reviewed to determine the configured kickstart and system image paths.
+
+These commands establish the observed operating state during the maintenance session.
+
 
 **Key commands:** `terminal length 0`, `show version`, `show module`, and `show boot`.
 
@@ -250,8 +270,10 @@ I ran diagnostic commands to inspect hardware condition, operating-system resour
 
 **Power and module diagnostics**
 
-- `show environment power` reports the status of installed power supplies. The captured result shows one supply operating and another reporting a failure/shutdown state.
-- `show diagnostic result module all` displays the switch's built-in module test results. The recorded module test output reports **PASS**.
+- `show environment power` identified Power Supply 1 as operational (`ok`) and Power Supply 2 as `fail/shutdown`. The switch remained operational during inspection but did not have functional power-supply redundancy.
+- `show diagnostic result module all` displayed the built-in hardware diagnostic results, including a reported `PASS` for the supervisor module.
+- 
+**Hardware Finding:** One power supply reported a failure/shutdown condition. The issue was documented through NX-OS environmental diagnostics;
 
 ![Power supply status](evidence/nexus500-step8.png)
 
@@ -265,7 +287,13 @@ I ran diagnostic commands to inspect hardware condition, operating-system resour
 
 **Ethernet interface checks**
 
-`show interface` displays a port's state, speed, counters, and errors. `show interface brief` gives a broader view across interfaces, including reasons for down states such as no cable or missing transceiver.
+
+`show interface` was used to inspect Ethernet port state, interface counters, operating characteristics, and reported errors.
+
+`show interface brief` provided a summary of interface conditions across the switch, including disconnected ports and interfaces without installed transceivers.
+
+These commands document the interface states reported by NX-OS during inspection. Physical connectivity, end-to-end traffic forwarding, and transceiver functionality were not independently verified.
+
 
 ![Individual Ethernet interface inspection](evidence/nexus500-step11.png)
 
@@ -301,13 +329,23 @@ A MAC-table command initially returned a syntax error; the corrected form was us
 
 **System initialization**
 
-`init system` begins system initialization, removing stored configuration, licenses, and bootflash contents after confirmation. The terminal output records the filesystem preparation and initialization sequence.
+Executed `init system` from the NX-OS boot environment and confirmed the initialization operation.
+
+The command initiated removal of stored configuration, license data, and bootflash contents. The captured console output documents filesystem preparation, storage formatting, and completion of the initialization sequence.
+
+The initialization result establishes that the reported operation completed.
 
 ![NX-OS system initialization](evidence/nexus500-step16.png)
 
 **Final boot settings and storage review**
 
-`write erase boot` clears stored boot variables. `write erase debug` and `write erase` clear additional saved diagnostic/configuration data. `show ip` and directory commands inspect the resulting management and storage state. The output also records unsupported or mistyped commands, including `clear nvram`, which is not supported in this Nexus 5500 environment.
+`write erase boot` was executed to clear stored boot-variable configuration. Additional cleanup operations included `write erase debug` and `write erase` to target saved diagnostic and startup-configuration data.
+
+The console output records the accepted erase commands and an unsupported `clear nvram` attempt.
+
+Post-initialization inspection included `show ip` and `dir bootflash:` to examine the remaining management settings and local storage contents. The published directory listing showed only the `lost+found` directory.
+
+The final captures document the observed configuration and storage state following initialization.
 
 ![Boot-setting cleanup and post-initialization inspection](evidence/nexus500-step17.png)
 
@@ -317,31 +355,52 @@ A MAC-table command initially returned a syntax error; the corrected form was us
 
 
 <a id="project-results"></a>
-## 9. Project Results
 
-This project demonstrates hands-on enterprise infrastructure servicing and NX-OS image deployment on a physical **Cisco Nexus N5K-C5596UP** data-center switch.
+This maintenance record documents NX-OS recovery, image management, boot configuration, hardware inspection, and system initialization performed on a Cisco Nexus N5K-C5596UP data-center switch.
 
-### Technical Results
+### Recorded Technical Results
 
-| Technical Area | Work Performed |
+| Technical Area | Recorded Finding |
 |---|---|
-| **Bootloader Operations** | Accessed the Cisco loader environment through a serial-console connection using Tera Term. |
-| **TFTP Image Transfer** | Established management connectivity with a local TFTP server and transferred NX-OS images over Ethernet. |
-| **NX-OS Image Management** | Worked with kickstart and system images, copied image files to internal bootflash, and configured boot variables. |
-| **Secure Data Sanitization** | Executed configuration-clearing and system-initialization procedures to remove stored configuration and system data. |
-| **Hardware Diagnostics** | Inspected installed modules, power-supply status, hardware inventory, and diagnostic test results. |
-| **System Monitoring** | Examined CPU utilization, memory resources, and operating-system status through NX-OS CLI commands. |
-| **Interface Verification** | Reviewed Ethernet interface status, link conditions, and port statistics. |
-| **Technical Troubleshooting** | Identified command syntax errors and recorded an NX-OS image compatibility warning during the workflow. |
-| **Technical Documentation** | Documented the procedures through 19 terminal captures, hardware photographs, and a detailed technical report. |
+| Serial Console Access | Established console access through Tera Term. |
+| Bootloader Recovery | Accessed the Cisco loader environment and initiated kickstart recovery over TFTP. |
+| Network Configuration | Configured temporary management connectivity for image transfer. |
+| NX-OS Image Transfer | Transferred the operating-system image from the TFTP server to internal bootflash. |
+| Bootflash Management | Inspected local image files and configured startup-image references. |
+| Boot Configuration | Recorded an image compatibility-check failure during boot-variable configuration. |
+| Operating System | Reached the NX-OS CLI and inspected the running software release. |
+| Hardware Inventory | Identified the chassis and installed modules. |
+| Power Subsystem | One power supply operational; second supply reported `fail/shutdown`. |
+| Module Diagnostics | Supervisor diagnostic output reported `PASS`. |
+| System Resources | Inspected CPU usage, memory utilization, and process activity. |
+| Network Interfaces | Reviewed interface state, counters, and transceiver presence. |
+| Layer 2 Inspection | Inspected MAC address table and spanning-tree information. |
+| Configuration Inspection | Reviewed running and startup configurations. |
+| System Initialization | Executed initialization and examined the resulting storage state. |
+| Configuration Clearing | Executed boot-variable, diagnostic, and startup-configuration erase commands. |
 
-### Project Summary
+### Technical Findings
 
-The completed workflow demonstrates practical experience with Cisco data-center switching equipment, network-based operating-system imaging, bootflash management, secure sanitization, and infrastructure diagnostics.
+**NX-OS Image Compatibility**
 
-The project provides a documented example of physical enterprise networking operations, including the commands executed, system responses, and troubleshooting encountered throughout the process.
+A compatibility-check failure occurred during boot configuration. 
+
+**Power-Supply Condition**
+
+Environmental diagnostics identified a failure/shutdown condition affecting one power supply. The switch remained operational during inspection without functional redundant power.
+
+**Post-Initialization Storage**
+
+The initialization procedure completed, and the subsequent bootflash inspection showed the remaining filesystem structure. Restoration of the operating-system images   was tested and fully boots.
+
+### Verification Scope
+
+The recorded console output supports the recovery operations, image transfers, configuration commands, diagnostic inspections, and initialization activities described in this report.
+
+The switch succesffully boots with the new OS ans is ready for configurations.
 
 [↑ Back to Table of Contents](#table-of-contents)
+
 
 
 <a id="about"></a>
